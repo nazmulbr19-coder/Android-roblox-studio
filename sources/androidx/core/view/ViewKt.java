@@ -1,0 +1,273 @@
+package androidx.core.view;
+
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
+import kotlin.Metadata;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function0;
+import kotlin.jvm.functions.Function1;
+import kotlin.jvm.internal.Intrinsics;
+import kotlin.sequences.Sequence;
+import kotlin.sequences.SequencesKt;
+
+/* compiled from: View.kt */
+@Metadata(d1 = {"\u0000f\n\u0000\n\u0002\u0010\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0004\n\u0002\u0018\u0002\n\u0002\b\u0004\n\u0002\u0010\b\n\u0002\b\t\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\t\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\u000b\n\u0002\b\n\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0010\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0005\u001a5\u0010\u0000\u001a\u00020\u0001*\u00020\u00022#\b\u0004\u0010\u0003\u001a\u001d\u0012\u0013\u0012\u00110\u0002¢\u0006\f\b\u0005\u0012\b\b\u0006\u0012\u0004\b\b(\u0007\u0012\u0004\u0012\u00020\u00010\u0004H\u0086\bø\u0001\u0000\u001a5\u0010\b\u001a\u00020\u0001*\u00020\u00022#\b\u0004\u0010\u0003\u001a\u001d\u0012\u0013\u0012\u00110\u0002¢\u0006\f\b\u0005\u0012\b\b\u0006\u0012\u0004\b\b(\u0007\u0012\u0004\u0012\u00020\u00010\u0004H\u0086\bø\u0001\u0000\u001a5\u0010\t\u001a\u00020\n*\u00020\u00022#\b\u0004\u0010\u0003\u001a\u001d\u0012\u0013\u0012\u00110\u0002¢\u0006\f\b\u0005\u0012\b\b\u0006\u0012\u0004\b\b(\u0007\u0012\u0004\u0012\u00020\u00010\u0004H\u0086\bø\u0001\u0000\u001a5\u0010\u000b\u001a\u00020\u0001*\u00020\u00022#\b\u0004\u0010\u0003\u001a\u001d\u0012\u0013\u0012\u00110\u0002¢\u0006\f\b\u0005\u0012\b\b\u0006\u0012\u0004\b\b(\u0007\u0012\u0004\u0012\u00020\u00010\u0004H\u0086\bø\u0001\u0000\u001a5\u0010\f\u001a\u00020\u0001*\u00020\u00022#\b\u0004\u0010\u0003\u001a\u001d\u0012\u0013\u0012\u00110\u0002¢\u0006\f\b\u0005\u0012\b\b\u0006\u0012\u0004\b\b(\u0007\u0012\u0004\u0012\u00020\u00010\u0004H\u0086\bø\u0001\u0000\u001a5\u0010\r\u001a\u00020\u0001*\u00020\u00022\b\b\u0003\u0010\u000e\u001a\u00020\u000f2\b\b\u0003\u0010\u0010\u001a\u00020\u000f2\b\b\u0003\u0010\u0011\u001a\u00020\u000f2\b\b\u0003\u0010\u0012\u001a\u00020\u000fH\u0086\b\u001a5\u0010\u0013\u001a\u00020\u0001*\u00020\u00022\b\b\u0003\u0010\u0014\u001a\u00020\u000f2\b\b\u0003\u0010\u0010\u001a\u00020\u000f2\b\b\u0003\u0010\u0015\u001a\u00020\u000f2\b\b\u0003\u0010\u0012\u001a\u00020\u000fH\u0086\b\u001a\u0017\u0010\u0016\u001a\u00020\u0001*\u00020\u00022\b\b\u0001\u0010\u0017\u001a\u00020\u000fH\u0086\b\u001a(\u0010\u0018\u001a\u00020\u0019*\u00020\u00022\u0006\u0010\u001a\u001a\u00020\u001b2\u000e\b\u0004\u0010\u0003\u001a\b\u0012\u0004\u0012\u00020\u00010\u001cH\u0086\bø\u0001\u0000\u001a \u0010\u001d\u001a\u00020\u0019*\u00020\u00022\u0006\u0010\u001a\u001a\u00020\u001b2\f\u0010\u0003\u001a\b\u0012\u0004\u0012\u00020\u00010\u001c\u001a\u0014\u0010\u001e\u001a\u00020\u001f*\u00020\u00022\b\b\u0002\u0010 \u001a\u00020!\u001a)\u0010,\u001a\u00020\u0001*\u00020\u00022\u0017\u0010-\u001a\u0013\u0012\u0004\u0012\u00020.\u0012\u0004\u0012\u00020\u00010\u0004¢\u0006\u0002\b/H\u0086\bø\u0001\u0000\u001a:\u0010,\u001a\u00020\u0001\"\n\b\u0000\u00100\u0018\u0001*\u00020.*\u00020\u00022\u0017\u0010-\u001a\u0013\u0012\u0004\u0012\u0002H0\u0012\u0004\u0012\u00020\u00010\u0004¢\u0006\u0002\b/H\u0087\bø\u0001\u0000¢\u0006\u0002\b1\"*\u0010$\u001a\u00020#*\u00020\u00022\u0006\u0010\"\u001a\u00020#8Æ\u0002@Æ\u0002X\u0086\u000e¢\u0006\f\u001a\u0004\b$\u0010%\"\u0004\b&\u0010'\"*\u0010(\u001a\u00020#*\u00020\u00022\u0006\u0010\"\u001a\u00020#8Æ\u0002@Æ\u0002X\u0086\u000e¢\u0006\f\u001a\u0004\b(\u0010%\"\u0004\b)\u0010'\"*\u0010*\u001a\u00020#*\u00020\u00022\u0006\u0010\"\u001a\u00020#8Æ\u0002@Æ\u0002X\u0086\u000e¢\u0006\f\u001a\u0004\b*\u0010%\"\u0004\b+\u0010'\"\u0016\u00102\u001a\u00020\u000f*\u00020\u00028Æ\u0002¢\u0006\u0006\u001a\u0004\b3\u00104\"\u0016\u00105\u001a\u00020\u000f*\u00020\u00028Æ\u0002¢\u0006\u0006\u001a\u0004\b6\u00104\"\u0016\u00107\u001a\u00020\u000f*\u00020\u00028Æ\u0002¢\u0006\u0006\u001a\u0004\b8\u00104\"\u0016\u00109\u001a\u00020\u000f*\u00020\u00028Æ\u0002¢\u0006\u0006\u001a\u0004\b:\u00104\"\u0016\u0010;\u001a\u00020\u000f*\u00020\u00028Æ\u0002¢\u0006\u0006\u001a\u0004\b<\u00104\"\u0016\u0010=\u001a\u00020\u000f*\u00020\u00028Æ\u0002¢\u0006\u0006\u001a\u0004\b>\u00104\"\u001b\u0010?\u001a\b\u0012\u0004\u0012\u00020A0@*\u00020\u00028F¢\u0006\u0006\u001a\u0004\bB\u0010C\"\u001b\u0010D\u001a\b\u0012\u0004\u0012\u00020\u00020@*\u00020\u00028F¢\u0006\u0006\u001a\u0004\bE\u0010C\u0082\u0002\u0007\n\u0005\b\u009920\u0001¨\u0006F"}, d2 = {"doOnNextLayout", "", "Landroid/view/View;", "action", "Lkotlin/Function1;", "Lkotlin/ParameterName;", "name", "view", "doOnLayout", "doOnPreDraw", "Landroidx/core/view/OneShotPreDrawListener;", "doOnAttach", "doOnDetach", "updatePaddingRelative", "start", "", "top", "end", "bottom", "updatePadding", "left", "right", "setPadding", "size", "postDelayed", "Ljava/lang/Runnable;", "delayInMillis", "", "Lkotlin/Function0;", "postOnAnimationDelayed", "drawToBitmap", "Landroid/graphics/Bitmap;", "config", "Landroid/graphics/Bitmap$Config;", "value", "", "isVisible", "(Landroid/view/View;)Z", "setVisible", "(Landroid/view/View;Z)V", "isInvisible", "setInvisible", "isGone", "setGone", "updateLayoutParams", "block", "Landroid/view/ViewGroup$LayoutParams;", "Lkotlin/ExtensionFunctionType;", "T", "updateLayoutParamsTyped", "marginLeft", "getMarginLeft", "(Landroid/view/View;)I", "marginTop", "getMarginTop", "marginRight", "getMarginRight", "marginBottom", "getMarginBottom", "marginStart", "getMarginStart", "marginEnd", "getMarginEnd", "ancestors", "Lkotlin/sequences/Sequence;", "Landroid/view/ViewParent;", "getAncestors", "(Landroid/view/View;)Lkotlin/sequences/Sequence;", "allViews", "getAllViews", "core"}, k = 2, mv = {2, 1, 0}, xi = 48)
+/* loaded from: classes.dex */
+public final class ViewKt {
+    public static final void doOnAttach(View view, Function1<? super View, Unit> action) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        Intrinsics.checkNotNullParameter(action, "action");
+        if (view.isAttachedToWindow()) {
+            action.invoke(view);
+        } else {
+            view.addOnAttachStateChangeListener(new ViewKt$doOnAttach$1(view, action));
+        }
+    }
+
+    public static final void doOnDetach(View view, Function1<? super View, Unit> action) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        Intrinsics.checkNotNullParameter(action, "action");
+        if (view.isAttachedToWindow()) {
+            view.addOnAttachStateChangeListener(new ViewKt$doOnDetach$1(view, action));
+        } else {
+            action.invoke(view);
+        }
+    }
+
+    public static final void doOnLayout(View view, Function1<? super View, Unit> action) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        Intrinsics.checkNotNullParameter(action, "action");
+        if (!view.isLaidOut() || view.isLayoutRequested()) {
+            view.addOnLayoutChangeListener(new ViewKt$doOnLayout$$inlined$doOnNextLayout$1(action));
+        } else {
+            action.invoke(view);
+        }
+    }
+
+    public static final void doOnNextLayout(View view, Function1<? super View, Unit> action) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        Intrinsics.checkNotNullParameter(action, "action");
+        view.addOnLayoutChangeListener(new ViewKt$doOnNextLayout$1(action));
+    }
+
+    public static final OneShotPreDrawListener doOnPreDraw(View view, Function1<? super View, Unit> action) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        Intrinsics.checkNotNullParameter(action, "action");
+        OneShotPreDrawListener add = OneShotPreDrawListener.add(view, new ViewKt$doOnPreDraw$1(action, view));
+        Intrinsics.checkNotNullExpressionValue(add, "add(...)");
+        return add;
+    }
+
+    public static final Bitmap drawToBitmap(View view, Bitmap.Config config) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        Intrinsics.checkNotNullParameter(config, "config");
+        if (!view.isLaidOut()) {
+            throw new IllegalStateException("View needs to be laid out before calling drawToBitmap()");
+        }
+        Bitmap createBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), config);
+        Intrinsics.checkNotNullExpressionValue(createBitmap, "createBitmap(...)");
+        Canvas canvas = new Canvas(createBitmap);
+        canvas.translate(-view.getScrollX(), -view.getScrollY());
+        view.draw(canvas);
+        return createBitmap;
+    }
+
+    public static /* synthetic */ Bitmap drawToBitmap$default(View view, Bitmap.Config config, int i, Object obj) {
+        if ((i & 1) != 0) {
+            config = Bitmap.Config.ARGB_8888;
+        }
+        return drawToBitmap(view, config);
+    }
+
+    public static final Sequence<View> getAllViews(View view) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        return SequencesKt.sequence(new ViewKt$allViews$1(view, null));
+    }
+
+    public static final Sequence<ViewParent> getAncestors(View view) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        return SequencesKt.generateSequence(view.getParent(), ViewKt$ancestors$1.INSTANCE);
+    }
+
+    public static final int getMarginBottom(View view) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        ViewGroup.MarginLayoutParams marginLayoutParams = layoutParams instanceof ViewGroup.MarginLayoutParams ? (ViewGroup.MarginLayoutParams) layoutParams : null;
+        if (marginLayoutParams != null) {
+            return marginLayoutParams.bottomMargin;
+        }
+        return 0;
+    }
+
+    public static final int getMarginEnd(View view) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
+            return ((ViewGroup.MarginLayoutParams) layoutParams).getMarginEnd();
+        }
+        return 0;
+    }
+
+    public static final int getMarginLeft(View view) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        ViewGroup.MarginLayoutParams marginLayoutParams = layoutParams instanceof ViewGroup.MarginLayoutParams ? (ViewGroup.MarginLayoutParams) layoutParams : null;
+        if (marginLayoutParams != null) {
+            return marginLayoutParams.leftMargin;
+        }
+        return 0;
+    }
+
+    public static final int getMarginRight(View view) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        ViewGroup.MarginLayoutParams marginLayoutParams = layoutParams instanceof ViewGroup.MarginLayoutParams ? (ViewGroup.MarginLayoutParams) layoutParams : null;
+        if (marginLayoutParams != null) {
+            return marginLayoutParams.rightMargin;
+        }
+        return 0;
+    }
+
+    public static final int getMarginStart(View view) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
+            return ((ViewGroup.MarginLayoutParams) layoutParams).getMarginStart();
+        }
+        return 0;
+    }
+
+    public static final int getMarginTop(View view) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        ViewGroup.MarginLayoutParams marginLayoutParams = layoutParams instanceof ViewGroup.MarginLayoutParams ? (ViewGroup.MarginLayoutParams) layoutParams : null;
+        if (marginLayoutParams != null) {
+            return marginLayoutParams.topMargin;
+        }
+        return 0;
+    }
+
+    public static final boolean isGone(View view) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        return view.getVisibility() == 8;
+    }
+
+    public static final boolean isInvisible(View view) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        return view.getVisibility() == 4;
+    }
+
+    public static final boolean isVisible(View view) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        return view.getVisibility() == 0;
+    }
+
+    public static final Runnable postDelayed(View view, long j, Function0<Unit> action) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        Intrinsics.checkNotNullParameter(action, "action");
+        ViewKt$postDelayed$runnable$1 viewKt$postDelayed$runnable$1 = new ViewKt$postDelayed$runnable$1(action);
+        view.postDelayed(viewKt$postDelayed$runnable$1, j);
+        return viewKt$postDelayed$runnable$1;
+    }
+
+    public static final Runnable postOnAnimationDelayed(View view, long j, Function0<Unit> action) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        Intrinsics.checkNotNullParameter(action, "action");
+        ViewKt$$ExternalSyntheticLambda0 viewKt$$ExternalSyntheticLambda0 = new ViewKt$$ExternalSyntheticLambda0(action);
+        view.postOnAnimationDelayed(viewKt$$ExternalSyntheticLambda0, j);
+        return viewKt$$ExternalSyntheticLambda0;
+    }
+
+    /* JADX INFO: Access modifiers changed from: package-private */
+    public static final void postOnAnimationDelayed$lambda$0(Function0 function0) {
+        function0.invoke();
+    }
+
+    public static final void setGone(View view, boolean z) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        view.setVisibility(z ? 8 : 0);
+    }
+
+    public static final void setInvisible(View view, boolean z) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        view.setVisibility(z ? 4 : 0);
+    }
+
+    public static final void setPadding(View view, int i) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        view.setPadding(i, i, i, i);
+    }
+
+    public static final void setVisible(View view, boolean z) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        view.setVisibility(z ? 0 : 8);
+    }
+
+    public static final void updateLayoutParams(View view, Function1<? super ViewGroup.LayoutParams, Unit> block) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        Intrinsics.checkNotNullParameter(block, "block");
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        if (layoutParams == null) {
+            throw new NullPointerException("null cannot be cast to non-null type android.view.ViewGroup.LayoutParams");
+        }
+        block.invoke(layoutParams);
+        view.setLayoutParams(layoutParams);
+    }
+
+    public static final /* synthetic */ <T extends ViewGroup.LayoutParams> void updateLayoutParamsTyped(View view, Function1<? super T, Unit> block) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        Intrinsics.checkNotNullParameter(block, "block");
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        Intrinsics.reifiedOperationMarker(1, "T");
+        ViewGroup.LayoutParams layoutParams2 = layoutParams;
+        block.invoke(layoutParams2);
+        view.setLayoutParams(layoutParams2);
+    }
+
+    public static final void updatePadding(View view, int i, int i2, int i3, int i4) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        view.setPadding(i, i2, i3, i4);
+    }
+
+    public static /* synthetic */ void updatePadding$default(View view, int i, int i2, int i3, int i4, int i5, Object obj) {
+        if ((i5 & 1) != 0) {
+            i = view.getPaddingLeft();
+        }
+        if ((i5 & 2) != 0) {
+            i2 = view.getPaddingTop();
+        }
+        if ((i5 & 4) != 0) {
+            i3 = view.getPaddingRight();
+        }
+        if ((i5 & 8) != 0) {
+            i4 = view.getPaddingBottom();
+        }
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        view.setPadding(i, i2, i3, i4);
+    }
+
+    public static final void updatePaddingRelative(View view, int i, int i2, int i3, int i4) {
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        view.setPaddingRelative(i, i2, i3, i4);
+    }
+
+    public static /* synthetic */ void updatePaddingRelative$default(View view, int i, int i2, int i3, int i4, int i5, Object obj) {
+        if ((i5 & 1) != 0) {
+            i = view.getPaddingStart();
+        }
+        if ((i5 & 2) != 0) {
+            i2 = view.getPaddingTop();
+        }
+        if ((i5 & 4) != 0) {
+            i3 = view.getPaddingEnd();
+        }
+        if ((i5 & 8) != 0) {
+            i4 = view.getPaddingBottom();
+        }
+        Intrinsics.checkNotNullParameter(view, "<this>");
+        view.setPaddingRelative(i, i2, i3, i4);
+    }
+}

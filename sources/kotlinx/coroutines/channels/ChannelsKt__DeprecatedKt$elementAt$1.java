@@ -1,0 +1,32 @@
+package kotlinx.coroutines.channels;
+
+import kotlin.Metadata;
+import kotlin.coroutines.Continuation;
+import kotlin.coroutines.jvm.internal.ContinuationImpl;
+import kotlin.coroutines.jvm.internal.DebugMetadata;
+import org.luaj.vm2.parser.LuaParserConstants;
+
+/* compiled from: Deprecated.kt */
+@Metadata(k = 3, mv = {2, 0, 0}, xi = 48)
+@DebugMetadata(c = "kotlinx.coroutines.channels.ChannelsKt__DeprecatedKt", f = "Deprecated.kt", i = {0, 0, 0}, l = {LuaParserConstants.LF}, m = "elementAt", n = {"$this$consume$iv", "index", "count"}, s = {"L$0", "I$0", "I$1"})
+/* loaded from: classes10.dex */
+final class ChannelsKt__DeprecatedKt$elementAt$1<E> extends ContinuationImpl {
+    int I$0;
+    int I$1;
+    Object L$0;
+    Object L$1;
+    int label;
+    /* synthetic */ Object result;
+
+    /* JADX INFO: Access modifiers changed from: package-private */
+    public ChannelsKt__DeprecatedKt$elementAt$1(Continuation<? super ChannelsKt__DeprecatedKt$elementAt$1> continuation) {
+        super(continuation);
+    }
+
+    @Override // kotlin.coroutines.jvm.internal.BaseContinuationImpl
+    public final Object invokeSuspend(Object obj) {
+        this.result = obj;
+        this.label |= Integer.MIN_VALUE;
+        return ChannelsKt.elementAt(null, 0, this);
+    }
+}

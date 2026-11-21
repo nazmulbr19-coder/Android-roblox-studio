@@ -1,0 +1,8 @@
+package android.adservices.common;
+
+/* loaded from: classes9.dex */
+public /* synthetic */ interface AdServicesOutcomeReceiver {
+    static {
+        throw new NoClassDefFoundError();
+    }
+}

@@ -1,0 +1,153 @@
+package com.google.android.material.internal;
+
+import android.content.Context;
+import android.graphics.Typeface;
+import android.text.TextPaint;
+import com.google.android.material.resources.TextAppearance;
+import com.google.android.material.resources.TextAppearanceFontCallback;
+import java.lang.ref.WeakReference;
+
+/* loaded from: classes.dex */
+public class TextDrawableHelper {
+    private TextAppearance textAppearance;
+    private float textHeight;
+    private float textWidth;
+    private final TextPaint textPaint = new TextPaint(1);
+    private final TextAppearanceFontCallback fontCallback = new AnonymousClass1();
+    private boolean textSizeDirty = true;
+    private WeakReference<TextDrawableDelegate> delegate = new WeakReference<>(null);
+
+    /* renamed from: com.google.android.material.internal.TextDrawableHelper$1, reason: invalid class name */
+    /* loaded from: classes.dex */
+    class AnonymousClass1 extends TextAppearanceFontCallback {
+        AnonymousClass1() {
+        }
+
+        @Override // com.google.android.material.resources.TextAppearanceFontCallback
+        public void onFontRetrievalFailed(int i) {
+            TextDrawableHelper.access$002(TextDrawableHelper.this, true);
+            TextDrawableDelegate textDrawableDelegate = (TextDrawableDelegate) TextDrawableHelper.access$100(TextDrawableHelper.this).get();
+            if (textDrawableDelegate != null) {
+                textDrawableDelegate.onTextSizeChange();
+            }
+        }
+
+        @Override // com.google.android.material.resources.TextAppearanceFontCallback
+        public void onFontRetrieved(Typeface typeface, boolean z) {
+            if (z) {
+                return;
+            }
+            TextDrawableHelper.access$002(TextDrawableHelper.this, true);
+            TextDrawableDelegate textDrawableDelegate = (TextDrawableDelegate) TextDrawableHelper.access$100(TextDrawableHelper.this).get();
+            if (textDrawableDelegate != null) {
+                textDrawableDelegate.onTextSizeChange();
+            }
+        }
+    }
+
+    /* loaded from: classes.dex */
+    public interface TextDrawableDelegate {
+        int[] getState();
+
+        boolean onStateChange(int[] iArr);
+
+        void onTextSizeChange();
+    }
+
+    public TextDrawableHelper(TextDrawableDelegate textDrawableDelegate) {
+        setDelegate(textDrawableDelegate);
+    }
+
+    static /* synthetic */ boolean access$002(TextDrawableHelper textDrawableHelper, boolean z) {
+        textDrawableHelper.textSizeDirty = z;
+        return z;
+    }
+
+    static /* synthetic */ WeakReference access$100(TextDrawableHelper textDrawableHelper) {
+        return textDrawableHelper.delegate;
+    }
+
+    private float calculateTextHeight(String str) {
+        if (str == null) {
+            return 0.0f;
+        }
+        return Math.abs(this.textPaint.getFontMetrics().ascent);
+    }
+
+    private float calculateTextWidth(CharSequence charSequence) {
+        if (charSequence == null) {
+            return 0.0f;
+        }
+        return this.textPaint.measureText(charSequence, 0, charSequence.length());
+    }
+
+    private void refreshTextDimens(String str) {
+        this.textWidth = calculateTextWidth(str);
+        this.textHeight = calculateTextHeight(str);
+        this.textSizeDirty = false;
+    }
+
+    public TextAppearance getTextAppearance() {
+        return this.textAppearance;
+    }
+
+    public float getTextHeight(String str) {
+        if (!this.textSizeDirty) {
+            return this.textHeight;
+        }
+        refreshTextDimens(str);
+        return this.textHeight;
+    }
+
+    public TextPaint getTextPaint() {
+        return this.textPaint;
+    }
+
+    public float getTextWidth(String str) {
+        if (!this.textSizeDirty) {
+            return this.textWidth;
+        }
+        refreshTextDimens(str);
+        return this.textWidth;
+    }
+
+    public boolean isTextWidthDirty() {
+        return this.textSizeDirty;
+    }
+
+    public void setDelegate(TextDrawableDelegate textDrawableDelegate) {
+        this.delegate = new WeakReference<>(textDrawableDelegate);
+    }
+
+    public void setTextAppearance(TextAppearance textAppearance, Context context) {
+        if (this.textAppearance != textAppearance) {
+            this.textAppearance = textAppearance;
+            if (textAppearance != null) {
+                textAppearance.updateMeasureState(context, this.textPaint, this.fontCallback);
+                TextDrawableDelegate textDrawableDelegate = this.delegate.get();
+                if (textDrawableDelegate != null) {
+                    this.textPaint.drawableState = textDrawableDelegate.getState();
+                }
+                textAppearance.updateDrawState(context, this.textPaint, this.fontCallback);
+                this.textSizeDirty = true;
+            }
+            TextDrawableDelegate textDrawableDelegate2 = this.delegate.get();
+            if (textDrawableDelegate2 != null) {
+                textDrawableDelegate2.onTextSizeChange();
+                textDrawableDelegate2.onStateChange(textDrawableDelegate2.getState());
+            }
+        }
+    }
+
+    public void setTextSizeDirty(boolean z) {
+        this.textSizeDirty = z;
+    }
+
+    public void setTextWidthDirty(boolean z) {
+        this.textSizeDirty = z;
+    }
+
+    public void updateTextPaintDrawState(Context context) {
+        this.textAppearance.updateDrawState(context, this.textPaint, this.fontCallback);
+    }
+}

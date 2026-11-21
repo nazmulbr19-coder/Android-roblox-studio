@@ -1,0 +1,25 @@
+package com.exampletest.mobilestudiotest.ui;
+
+import android.app.Activity;
+import com.android.tools.r8.annotations.LambdaMethod;
+import com.android.tools.r8.annotations.SynthesizedClassV2;
+import kotlin.jvm.functions.Function0;
+
+/* compiled from: D8$$SyntheticClass */
+@LambdaMethod(holder = "Lcom/exampletest/mobilestudiotest/ui/AvatarUi;", method = "playtestAvatar$lambda$10", proto = "(ZLandroid/app/Activity;)Lkotlin/Unit;")
+@SynthesizedClassV2(apiLevel = -2, kind = 28, versionHash = "64bbee9deb17f2433a2f464e7880a82f306bf117c38a5da5e35bd2560d29022a")
+/* loaded from: classes5.dex */
+public final /* synthetic */ class AvatarUi$$ExternalSyntheticLambda15 implements Function0 {
+    public final /* synthetic */ boolean f$0;
+    public final /* synthetic */ Activity f$1;
+
+    public /* synthetic */ AvatarUi$$ExternalSyntheticLambda15(boolean z, Activity activity) {
+        this.f$0 = z;
+        this.f$1 = activity;
+    }
+
+    @Override // kotlin.jvm.functions.Function0
+    public final Object invoke() {
+        return AvatarUi.playtestAvatar$lambda$10(this.f$0, this.f$1);
+    }
+}
